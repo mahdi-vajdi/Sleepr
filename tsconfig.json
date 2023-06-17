@@ -18,20 +18,16 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/common": [
-        "libs/common/src"
-      ],
-      "@app/common/*": [
-        "libs/common/src/*"
-      ]
+      "@app/common": ["libs/common/src"],
+      "@app/common/*": ["libs/common/src/*"]
     }
-  },
-  "watchOptions": {
-    "watchFile": "fixedpollinginterval",
-    "watchDirectory": "fixedpollinginterval",
-    "excludeDirectories": [
-      "node_modules",
-      "dist"
-    ]
   }
+  // "watchOptions": {
+  //   "watchFile": "fixedpollinginterval",
+  //   "watchDirectory": "fixedpollinginterval",
+  //   "excludeDirectories": [
+  //     "node_modules",
+  //     "dist"
+  //   ]
+  // }
 }
