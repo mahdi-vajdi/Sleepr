@@ -16,6 +16,9 @@ export class NotificationsService {
       clientSecret: this.configService.get('GOOGLE_OAUTH_CLIENT_SECRET'),
       refreshToken: this.configService.get('GOOGLE_OAUTH_REFRESH_TOKEN'),
     },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
 
   async notifyEmail({ email }: NotifyEmailDto) {
