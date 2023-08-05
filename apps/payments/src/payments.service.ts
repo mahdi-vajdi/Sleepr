@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 import { NOTIFICATIONS_SERVICE } from '@app/common';
@@ -14,6 +14,8 @@ export class PaymentsService {
     },
   );
 
+  private readonly logger = new Logger(PaymentsService.name);
+
   constructor(
     private readonly configService: ConfigService,
     @Inject(NOTIFICATIONS_SERVICE)
@@ -27,6 +29,8 @@ export class PaymentsService {
     //   // payment_method: 'pm_card_visa',
     // });
     // console.log('payment method: ', paymentMethod);
+    this.logger.log('Recieved payment: ' + amount + ' ' + email);
+    console.log("We're at payments service");
 
     const paymentIntent = await this.stripe.paymentIntents.create({
       amount: amount * 100,

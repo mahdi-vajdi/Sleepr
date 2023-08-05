@@ -11,6 +11,8 @@ import { LoggerModule } from '@app/common';
       isGlobal: true,
       validationSchema: Joi.object({
         PORT: Joi.number().required(),
+        RABBIT_MQ_URI: Joi.string().required(),
+        RABBIT_MQ_NOTIFICATIONS_QUEUE: Joi.string().required(),
       }),
     }),
     LoggerModule,
