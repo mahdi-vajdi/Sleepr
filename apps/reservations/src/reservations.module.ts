@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ReservationsService } from './reservations.service';
 import { ReservationsController } from './reservations.controller';
 import {
   DatabaseModule,
@@ -7,20 +6,29 @@ import {
   AUTH_SERVICE,
   PAYMENTS_SERVICE,
 } from '@app/common';
-import {
-  ReservationDocument,
-  ReservationSchema,
-} from './models/reservation.schema';
-import { ReservationsRepository } from './reservations.repository';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CqrsModule } from '@nestjs/cqrs';
+import { ReservationEntityRepository } from './repositories/reservation-entity.repository';
+import { ReservationSchemaFactory } from './models/reservation-schema.factory';
+import { ReservationFactory } from './models/reservation.factory';
+import { ReservationSchema } from './models/reservation.schema';
+import { SchemaFactory } from '@nestjs/mongoose';
+import { ReservaionEventHandlers } from './events';
+import { ReservationQueryHandlers } from './queries';
+import { ReservationDtoRepository } from './repositories/reservation-dto.repository';
+import { ReservationCommandHandlers } from './commands';
 
 @Module({
   imports: [
+    CqrsModule,
     DatabaseModule,
     DatabaseModule.forFeature([
-      { name: ReservationDocument.name, schema: ReservationSchema },
+      {
+        name: ReservationSchema.name,
+        schema: SchemaFactory.createForClass(ReservationSchema),
+      },
     ]),
     LoggerModule,
     ConfigModule.forRoot({
@@ -46,8 +54,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         }),
         inject: [ConfigService],
       },
-    ]),
-    ClientsModule.registerAsync([
       {
         name: PAYMENTS_SERVICE,
         useFactory: (configService: ConfigService) => ({
@@ -62,6 +68,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
   ],
   controllers: [ReservationsController],
-  providers: [ReservationsService, ReservationsRepository],
+  providers: [
+    ReservationEntityRepository,
+    ReservationDtoRepository,
+    ReservationSchemaFactory,
+    ReservationFactory,
+    ...ReservationCommandHandlers,
+    ...ReservaionEventHandlers,
+    ...ReservationQueryHandlers,
+  ],
 })
 export class ReservationsModule {}

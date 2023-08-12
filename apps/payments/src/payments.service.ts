@@ -38,6 +38,7 @@ export class PaymentsService {
     });
 
     this.notificationsService.emit('notify_email', { email });
+    console.log('payments intent:' + JSON.stringify(paymentIntent));
 
     return paymentIntent;
   }

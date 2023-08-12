@@ -12,6 +12,9 @@ services:
     volumes:
       - .:/usr/src/app
       # - /usr/src/app/node_modules
+    depends_on:
+      - mongo
+
   auth:
     build:
       context: .
@@ -25,6 +28,9 @@ services:
     volumes:
       - .:/usr/src/app
       # - /usr/src/app/node_modules
+    depends_on:
+      - mongo
+
   payments:
     build:
       context: .
@@ -36,6 +42,9 @@ services:
     volumes:
       - .:/usr/src/app
       # - /usr/src/app/node_modules
+    depends_on:
+      - mongo
+
   notifications:
     build:
       context: .
@@ -47,5 +56,8 @@ services:
     volumes:
       - .:/usr/src/app
       # - /usr/src/app/node_modules
+    depends_on:
+      - mongo
+      
   mongo:
     image: mongo

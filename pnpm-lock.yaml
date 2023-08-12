@@ -14,6 +14,9 @@ dependencies:
   '@nestjs/core':
     specifier: ^9.4.3
     version: 9.4.3(@nestjs/common@9.4.3)(@nestjs/microservices@10.0.2)(@nestjs/platform-express@9.4.3)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+  '@nestjs/cqrs':
+    specifier: ^10.1.0
+    version: 10.1.0(@nestjs/common@9.4.3)(@nestjs/core@9.4.3)(reflect-metadata@0.1.13)(rxjs@7.8.1)
   '@nestjs/jwt':
     specifier: ^10.1.0
     version: 10.1.0(@nestjs/common@9.4.3)
@@ -50,6 +53,9 @@ dependencies:
   joi:
     specifier: ^17.9.2
     version: 17.9.2
+  mongodb:
+    specifier: ^5.7.0
+    version: 5.7.0
   mongoose:
     specifier: ^7.3.0
     version: 7.3.0
@@ -1022,6 +1028,21 @@ packages:
       uid: 2.0.2
     transitivePeerDependencies:
       - encoding
+
+  /@nestjs/cqrs@10.1.0(@nestjs/common@9.4.3)(@nestjs/core@9.4.3)(reflect-metadata@0.1.13)(rxjs@7.8.1):
+    resolution: {integrity: sha512-jq0Q7x/U9hHkh+BPVwOAyRGFALV8Ulz79zg4Kw/KoydpLnz8qwQesqs5Cut8yTP7JHHotFg7LN17iz+ZvTjLew==}
+    peerDependencies:
+      '@nestjs/common': ^9.0.0 || ^10.0.0
+      '@nestjs/core': ^9.0.0 || ^10.0.0
+      reflect-metadata: 0.1.13
+      rxjs: ^7.2.0
+    dependencies:
+      '@nestjs/common': 9.4.3(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      '@nestjs/core': 9.4.3(@nestjs/common@9.4.3)(@nestjs/microservices@10.0.2)(@nestjs/platform-express@9.4.3)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.1
+      uuid: 9.0.0
+    dev: false
 
   /@nestjs/jwt@10.1.0(@nestjs/common@9.4.3):
     resolution: {integrity: sha512-iLwCGS25ybUxGS7i5j/Mwuyzvp/WxJftHlm8aLEBv5GV92apz6L1QVjxLdZrqXbzo++C8gdJauhzil8qitY+6w==}
@@ -2081,6 +2102,11 @@ packages:
 
   /bson@5.3.0:
     resolution: {integrity: sha512-ukmCZMneMlaC5ebPHXIkP8YJzNl5DC41N5MAIvKDqLggdao342t4McltoJBQfQya/nHBWAcSsYRqlXPoQkTJag==}
+    engines: {node: '>=14.20.1'}
+    dev: false
+
+  /bson@5.4.0:
+    resolution: {integrity: sha512-WRZ5SQI5GfUuKnPTNmAYPiKIof3ORXAF4IRU5UcgmivNIon01rWQlw5RUH954dpu8yGL8T59YShVddIPaU/gFA==}
     engines: {node: '>=14.20.1'}
     dev: false
 
@@ -4158,6 +4184,34 @@ packages:
         optional: true
     dependencies:
       bson: 5.3.0
+      mongodb-connection-string-url: 2.6.0
+      socks: 2.7.1
+    optionalDependencies:
+      saslprep: 1.0.3
+    dev: false
+
+  /mongodb@5.7.0:
+    resolution: {integrity: sha512-zm82Bq33QbqtxDf58fLWBwTjARK3NSvKYjyz997KSy6hpat0prjeX/kxjbPVyZY60XYPDNETaHkHJI2UCzSLuw==}
+    engines: {node: '>=14.20.1'}
+    peerDependencies:
+      '@aws-sdk/credential-providers': ^3.201.0
+      '@mongodb-js/zstd': ^1.1.0
+      kerberos: ^2.0.1
+      mongodb-client-encryption: '>=2.3.0 <3'
+      snappy: ^7.2.2
+    peerDependenciesMeta:
+      '@aws-sdk/credential-providers':
+        optional: true
+      '@mongodb-js/zstd':
+        optional: true
+      kerberos:
+        optional: true
+      mongodb-client-encryption:
+        optional: true
+      snappy:
+        optional: true
+    dependencies:
+      bson: 5.4.0
       mongodb-connection-string-url: 2.6.0
       socks: 2.7.1
     optionalDependencies:
