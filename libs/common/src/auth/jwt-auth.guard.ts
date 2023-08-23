@@ -3,15 +3,25 @@ import {
   ExecutionContext,
   Inject,
   Injectable,
+  Logger,
+  OnModuleInit,
 } from '@nestjs/common';
 import { Observable, catchError, map, of, tap } from 'rxjs';
-import { AUTH_SERVICE } from '../constants/services';
-import { ClientProxy } from '@nestjs/microservices';
-import { UserDto } from '../dto';
+import { ClientGrpc } from '@nestjs/microservices';
+import { AUTH_SERVICE_NAME, AuthServiceClient } from '../types';
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
-  constructor(@Inject(AUTH_SERVICE) private readonly authClient: ClientProxy) {}
+export class JwtAuthGuard implements CanActivate, OnModuleInit {
+  private authService: AuthServiceClient;
+
+  constructor(
+    @Inject(AUTH_SERVICE_NAME) private readonly authClient: ClientGrpc,
+  ) {}
+
+  onModuleInit() {
+    this.authService =
+      this.authClient.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
+  }
 
   canActivate(
     context: ExecutionContext,
@@ -19,14 +29,15 @@ export class JwtAuthGuard implements CanActivate {
     const jwt = context.switchToHttp().getRequest().cookies?.Authentication;
     if (!jwt) return false;
 
-    return this.authClient
-      .send<UserDto>('authenticate', { Authentication: jwt })
-      .pipe(
-        tap((res) => {
-          context.switchToHttp().getRequest().user = res;
-        }),
-        map(() => true),
-        catchError(() => of(false)),
-      );
+    return this.authService.authenticate({ Authentication: jwt }).pipe(
+      tap((res) => {
+        context.switchToHttp().getRequest().user = {
+          ...res,
+          id: res.id,
+        };
+      }),
+      map(() => true),
+      catchError(() => of(false)),
+    );
   }
 }

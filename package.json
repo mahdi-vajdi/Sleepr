@@ -20,6 +20,8 @@
     "test:e2e": "jest --config ./apps/sleepr/test/jest-e2e.json"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.9.1",
+    "@grpc/proto-loader": "^0.7.9",
     "@nestjs/common": "^9.4.3",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^9.4.3",
@@ -45,7 +47,8 @@
     "pino-pretty": "^10.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "stripe": "^12.9.0"
+    "stripe": "^12.9.0",
+    "ts-proto": "^1.156.7"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.5.0",
