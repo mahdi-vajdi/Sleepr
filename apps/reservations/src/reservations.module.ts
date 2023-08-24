@@ -4,10 +4,10 @@ import { ReservationsController } from './reservations.controller';
 import {
   DatabaseModule,
   LoggerModule,
-  AUTH_SERVICE,
-  PAYMENTS_SERVICE,
   AUTH_SERVICE_NAME,
   AUTH_PACKAGE_NAME,
+  PAYMENTS_PACKAGE_NAME,
+  PAYMENTS_SERVICE_NAME,
 } from '@app/common';
 import {
   ReservationDocument,
@@ -30,9 +30,6 @@ import { join } from 'path';
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
-        PORT: Joi.number().required(),
-        PAYMENTS_HOST: Joi.string().required(),
-        PAYMENTS_PORT: Joi.number().required(),
       }),
     }),
     ClientsModule.registerAsync([
@@ -49,12 +46,13 @@ import { join } from 'path';
         inject: [ConfigService],
       },
       {
-        name: PAYMENTS_SERVICE,
+        name: PAYMENTS_SERVICE_NAME,
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
+          transport: Transport.GRPC,
           options: {
-            host: configService.get('PAYMENTS_HOST'),
-            port: configService.get('PAYMENTS_PORT'),
+            package: PAYMENTS_PACKAGE_NAME,
+            protoPath: join(__dirname, '../../../proto/payments.proto'),
+            url: configService.getOrThrow('PAYMENTS_GRPC_URL'),
           },
         }),
         inject: [ConfigService],

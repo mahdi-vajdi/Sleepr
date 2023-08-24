@@ -6,10 +6,10 @@ export class CardDto {
   cvc: string;
 
   @IsNumber()
-  exp_month: number;
+  expMonth: number;
 
   @IsNumber()
-  exp_year: number;
+  expYear: number;
 
   @IsCreditCard()
   number: string;
