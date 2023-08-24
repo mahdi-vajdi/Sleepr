@@ -22,11 +22,12 @@ export class NotificationsService {
   });
 
   async notifyEmail({ email, text }: NotifyEmailDto) {
-    await this.transporter.sendMail({
-      from: this.configService.get('SMTP_USER'),
-      to: email,
-      subject: 'Sleepr Notification',
-      text,
-    });
+    // await this.transporter.sendMail({
+    //   from: this.configService.get('SMTP_USER'),
+    //   to: email,
+    //   subject: 'Sleepr Notification',
+    //   text,
+    // });
+    console.log('Payment notification sent.');
   }
 }

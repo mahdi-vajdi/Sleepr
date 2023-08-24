@@ -9,9 +9,7 @@ import { LoggerModule } from '@app/common';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: Joi.object({
-        PORT: Joi.number().required(),
-      }),
+      validationSchema: Joi.object({}),
     }),
     LoggerModule,
   ],
