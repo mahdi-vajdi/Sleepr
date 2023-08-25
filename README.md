@@ -7,18 +7,9 @@
 - Checkout different branches for different implemetations.
 
 
-## Running the app
+## Running the app in dev environment
 
 ```bash
-#installation
-$ pnpm install
-
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+# linux
+$ docker compose up --build -V
 ```
